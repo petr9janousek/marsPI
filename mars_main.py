@@ -63,7 +63,7 @@ class Handlers:
         print(cmd)
         self.app.serial.write(cmd)
 
-    def on_genericToggle_toggle(self, toggle):
+    def on_genericToggle_toggled(self, toggle):
         tag = toggle.get_name()
         state = toggle.get_active()
         cmd = tag.split(',') #get list
