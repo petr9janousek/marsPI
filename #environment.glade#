@@ -815,7 +815,7 @@
                         <property name="row_spacing">10</property>
                         <property name="column_spacing">10</property>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="jer_entry_rotace">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="margin_left">10</property>
@@ -834,6 +834,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <signal name="clicked" handler="on_genericValue_clicked" object="jer_entry_rotace" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -849,6 +850,7 @@
                             <property name="margin_start">10</property>
                             <property name="margin_bottom">10</property>
                             <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -863,6 +865,7 @@
                             <property name="receives_default">True</property>
                             <property name="margin_bottom">10</property>
                             <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -878,6 +881,7 @@
                             <property name="margin_end">10</property>
                             <property name="margin_bottom">10</property>
                             <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -892,6 +896,7 @@
                             <property name="receives_default">True</property>
                             <property name="margin_right">10</property>
                             <property name="margin_start">10</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -905,6 +910,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="margin_right">10</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -919,6 +925,7 @@
                             <property name="receives_default">True</property>
                             <property name="margin_right">10</property>
                             <property name="margin_end">10</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -926,7 +933,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="jer_entry_naklon">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="margin_left">10</property>
@@ -945,6 +952,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <signal name="clicked" handler="on_genericValue_clicked" object="jer_entry_naklon" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -959,6 +967,7 @@
                             <property name="receives_default">True</property>
                             <property name="margin_right">10</property>
                             <property name="margin_end">10</property>
+                            <signal name="toggled" handler="on_genericToggle_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -973,6 +982,7 @@
                             <property name="receives_default">True</property>
                             <property name="margin_right">10</property>
                             <property name="margin_end">10</property>
+                            <signal name="toggled" handler="on_genericToggle_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -1504,6 +1514,7 @@
                             <property name="tooltip_text" translatable="yes">Provede homing obou souradnych systemu, nejprve horizontalni a pote vertikalni</property>
                             <property name="margin_right">10</property>
                             <property name="margin_end">10</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -1997,6 +2008,7 @@
                             <property name="margin_start">10</property>
                             <property name="margin_end">10</property>
                             <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                             <child>
                               <object class="GtkBox">
                                 <property name="visible">True</property>

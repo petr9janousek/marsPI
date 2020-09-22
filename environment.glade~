@@ -1617,7 +1617,6 @@
                             <property name="can_focus">False</property>
                             <property name="margin_start">10</property>
                             <property name="model">pla_list_tvary</property>
-                            <property name="active">0</property>
                             <property name="has_entry">True</property>
                             <property name="entry_text_column">0</property>
                             <child internal-child="entry">
@@ -1922,6 +1921,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="margin_end">10</property>
                             <property name="hexpand">True</property>
                             <signal name="clicked" handler="on_genericValue_clicked" object="rovv_entry" swapped="no"/>
                             <child>
@@ -1968,6 +1968,8 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="hexpand">True</property>
+                            <signal name="pressed" handler="on_rov_button_levo_pressed" swapped="no"/>
+                            <signal name="released" handler="on_rov_button_levo_released" swapped="no"/>
                             <child>
                               <object class="GtkBox">
                                 <property name="visible">True</property>
@@ -2011,6 +2013,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="margin_end">10</property>
                             <property name="hexpand">True</property>
                             <signal name="pressed" handler="on_rov_button_pravo_pressed" swapped="no"/>
                             <signal name="released" handler="on_rov_button_pravo_released" swapped="no"/>
@@ -2059,6 +2062,8 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="tooltip_text" translatable="yes">Horizontalni posuv. Do vedlejsiho pole zadejte ciselnou hodnotu v mm</property>
+                            <property name="margin_start">10</property>
+                            <property name="margin_end">10</property>
                             <property name="hexpand">True</property>
                             <child>
                               <object class="GtkBox">
@@ -2270,7 +2275,7 @@
                             <property name="name">2,8,val,0</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="margin_start">10</property>
+                            <property name="margin_end">10</property>
                             <property name="model">LIS_list_kopyta</property>
                             <property name="has_entry">True</property>
                             <property name="entry_text_column">0</property>
@@ -2367,6 +2372,7 @@
                                 <property name="name">2,2,val,0</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="margin_start">10</property>
                                 <property name="hexpand">True</property>
                                 <property name="input_purpose">number</property>
                                 <signal name="changed" handler="on_numericEntry_changed" swapped="no"/>

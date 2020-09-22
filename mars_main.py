@@ -41,17 +41,18 @@ class Handlers:
             self.app.serial.disconnect()
             label.set_text("Status: Odpojeno")
             self.app.serialthread.pause()
+
     def on_mainWindow_show(self, window):
         combo = self.app.builder.get_object("port_combobox")
         available = self.app.serial.list_ports()
         for p in available:
             combo.append_text(p)  # it has be [list] or (tuple,) to work
-
         check = self.app.builder.get_object("port_checkbox")
         if check.get_active:
             combo.set_active(1)
             #toggle = self.app.builder.get_object("port_toggle")
             #toggle.set_active(True)
+
     def on_lis_toggle_vyhazovace_toggled(self, toggle):
         tag = toggle.get_name()
         state = toggle.get_active()
@@ -88,9 +89,24 @@ class Handlers:
             print(cmd) #debug
             self.app.serial.write(cmd)
 
+    def on_rov_button_levo_pressed(self, button):
+        pass
+
+    def on_rov_button_levo_released(self, button):
+        pass
+
+    def on_rov_button_pravo_pressed(self, button):
+        pass
+
+    def on_rov_button_pravo_released(self, button):
+        pass
+
+    def on_genericComboValue_clicked(self, combo):
+        pass
     # ----------------------------------------------------------------------GUI SIGNAL
     def on_mainWindow_destroy(self, window):
         Gtk.main_quit()
+        
     def on_numericEntry_changed(self, entry):
         text = entry.get_text().strip()
         entry.set_text(''.join([i for i in text if i in '0123456789']))

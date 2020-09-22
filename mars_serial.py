@@ -1,7 +1,7 @@
 # coding UTF-8
 import serial, queue, sys, logging
 
-#logger = logging.getLogger("log.serial")
+logger = logging.getLogger("log.serial")
 
 class UART:
     def __init__(self):
@@ -17,8 +17,8 @@ class UART:
             print('Port %s je jiz pripojen' % port)
         else:
             self.serial.open()
-            #logger.info('Pripojeno na portu %s', port)
-            print('Pripojeno na portu %s' % port)
+            logger.info('Pripojeno na portu %s', port)
+            #print('Pripojeno na portu %s' % port)
 
     def disconnect(self):
         if self.serial.isOpen():
@@ -89,8 +89,8 @@ class UART:
             flat_list.insert(0, 42)
             flat_list.append(33)
             self.serial.write(bytearray(flat_list))
-            #logger.debug("Odeslano: %s", flat_list)
-            print("Odeslano: %s" % flat_list)
+            logger.debug("Odeslano: %s", flat_list)
+            #print("Odeslano: %s" % flat_list)
 
 if __name__ == "__main__":
     print("Testovaci rezim")
