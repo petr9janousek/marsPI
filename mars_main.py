@@ -76,6 +76,8 @@ class Handlers:
         tag = entry.get_name()
         val = entry.get_text()
         cmd = tag.split(',') #get list
+        if cmd[2] == '':
+            cmd[2] = 0
         cmd[2] = int(val) #val
         print(cmd) #debug
         self.app.serial.write(cmd)
@@ -88,6 +90,9 @@ class Handlers:
             cmd[2] = int(val) - 1 #val BUT nevybrano
             print(cmd) #debug
             self.app.serial.write(cmd)
+
+    def on_genericJog_clicked(self, button):
+        pass
 
     def on_rov_button_levo_pressed(self, button):
         pass
@@ -102,7 +107,14 @@ class Handlers:
         pass
 
     def on_genericComboValue_clicked(self, combo):
-        pass
+        tag = combo.get_name()
+        val = combo.get_active()
+        if val != 0:
+            cmd = tag.split(',') #get list
+            cmd[2] = int(val) - 1 #val BUT nevybrano
+            print(cmd) #debug
+            self.app.serial.write(cmd)
+
     # ----------------------------------------------------------------------GUI SIGNAL
     def on_mainWindow_destroy(self, window):
         Gtk.main_quit()
