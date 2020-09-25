@@ -81,7 +81,7 @@ class UART:
             data_list.insert(3, item & 0xFF)  #low byte
             #calculate checksum
             data_list.append(sum(data_list))
-            print("posteval:",data_list)
+            logger.info("Odesilam: %s", data_list)
             #create encoding
             data_list = [self.code(e) for e in data_list]
             flat_list = [item for sublist in data_list for item in sublist]

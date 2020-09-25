@@ -94,140 +94,12 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkDialog">
-    <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Nadpis</property>
-    <property name="icon_name">gtk-cancel</property>
-    <property name="type_hint">dialog</property>
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton">
-                <property name="label" translatable="yes">Ok</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton">
-                <property name="label" translatable="yes">Zrušit</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkTextView">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="vexpand">True</property>
-            <property name="editable">False</property>
-            <property name="cursor_visible">False</property>
-            <property name="accepts_tab">False</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
-  </object>
   <object class="GtkAdjustment" id="pla_adj_slider">
     <property name="lower">1</property>
     <property name="upper">4</property>
     <property name="value">1</property>
     <property name="step_increment">10</property>
     <property name="page_increment">10</property>
-  </object>
-  <object class="GtkListStore" id="pla_list_pozice">
-    <columns>
-      <!-- column-name pozice -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">a</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">b</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">c</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="pla_list_rezy">
-    <columns>
-      <!-- column-name pozice -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Bok</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Dno</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Napůlit bok</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="pla_list_tvary">
-    <columns>
-      <!-- column-name tvary -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Nevybráno</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Nožky</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Lichoběžník</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Čtverec</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Srdce</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Oblouk</col>
-      </row>
-    </data>
   </object>
   <object class="GtkWindow" id="mainWindow">
     <property name="width_request">800</property>
@@ -383,6 +255,7 @@
                 <items>
                   <item id="&lt;zadejte ID&gt;" translatable="yes">Nevybráno</item>
                 </items>
+                <signal name="button-press-event" handler="on_port_combobox_popdown" swapped="no"/>
                 <child internal-child="entry">
                   <object class="GtkEntry">
                     <property name="can_focus">False</property>
@@ -883,10 +756,9 @@
                         <property name="row_spacing">10</property>
                         <property name="column_spacing">10</property>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="jer_entry_rotace">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="margin_left">10</property>
                             <property name="margin_start">10</property>
                             <property name="hexpand">True</property>
                             <property name="input_purpose">number</property>
@@ -902,6 +774,8 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="margin_end">20</property>
+                            <signal name="clicked" handler="on_genericValue_clicked" object="jer_entry_rotace" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -917,6 +791,7 @@
                             <property name="margin_start">10</property>
                             <property name="margin_bottom">10</property>
                             <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -931,6 +806,7 @@
                             <property name="receives_default">True</property>
                             <property name="margin_bottom">10</property>
                             <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -946,6 +822,7 @@
                             <property name="margin_end">10</property>
                             <property name="margin_bottom">10</property>
                             <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -960,6 +837,7 @@
                             <property name="receives_default">True</property>
                             <property name="margin_right">10</property>
                             <property name="margin_start">10</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -973,6 +851,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="margin_right">10</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -985,8 +864,8 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="margin_right">10</property>
                             <property name="margin_end">10</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -994,10 +873,9 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="jer_entry_naklon">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="margin_left">10</property>
                             <property name="margin_start">10</property>
                             <property name="hexpand">True</property>
                             <property name="input_purpose">number</property>
@@ -1013,6 +891,8 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="margin_end">20</property>
+                            <signal name="clicked" handler="on_genericValue_clicked" object="jer_entry_naklon" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1025,8 +905,8 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="margin_right">10</property>
                             <property name="margin_end">10</property>
+                            <signal name="toggled" handler="on_genericToggle_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -1039,8 +919,8 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="margin_right">10</property>
                             <property name="margin_end">10</property>
+                            <signal name="toggled" handler="on_genericToggle_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -1062,7 +942,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="margin_left">10</property>
                                 <property name="margin_start">10</property>
                               </object>
                               <packing>
@@ -1401,7 +1280,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="margin_left">20</property>
                                 <property name="margin_start">20</property>
                                 <property name="margin_top">10</property>
                               </object>
@@ -1570,8 +1448,8 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="tooltip_text" translatable="yes">Provede homing obou souradnych systemu, nejprve horizontalni a pote vertikalni</property>
-                            <property name="margin_right">10</property>
                             <property name="margin_end">10</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -1581,13 +1459,12 @@
                         <child>
                           <object class="GtkButton" id="pla_button_tvary">
                             <property name="label" translatable="yes">TVARY</property>
-                            <property name="name">2,3,0,0</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="margin_right">10</property>
-                            <property name="margin_end">10</property>
-                            <signal name="clicked" handler="on_genericComboValue_clicked" object="pla_combo_tvary" swapped="no"/>
+                            <property name="margin_end">20</property>
+                            <signal name="clicked" handler="on_genericCombo_changed" object="pla_combo_tvary" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1611,55 +1488,14 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkComboBox" id="pla_combo_tvary">
-                            <property name="name">3, 5, 11, bit</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="margin_start">10</property>
-                            <property name="model">pla_list_tvary</property>
-                            <property name="has_entry">True</property>
-                            <property name="entry_text_column">0</property>
-                            <child internal-child="entry">
-                              <object class="GtkEntry">
-                                <property name="can_focus">False</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="left_attach">0</property>
-                            <property name="top_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBox" id="pla_combo_pozice">
-                            <property name="name">1,1,2,3</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="margin_start">10</property>
-                            <property name="model">pla_list_pozice</property>
-                            <property name="has_entry">True</property>
-                            <property name="entry_text_column">0</property>
-                            <child internal-child="entry">
-                              <object class="GtkEntry">
-                                <property name="can_focus">False</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="left_attach">0</property>
-                            <property name="top_attach">3</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkButton" id="pla_button_priprava">
                             <property name="label" translatable="yes">PŘIPRAVIT</property>
-                            <property name="name">2,3,0,0</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="margin_right">10</property>
-                            <property name="margin_end">10</property>
-                            <signal name="clicked" handler="on_genericComboValue_clicked" object="pla_combo_pozice" swapped="no"/>
+                            <property name="margin_end">20</property>
+                            <signal name="clicked" handler="on_genericCombo_changed" object="pla_combo_pozice" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1685,14 +1521,12 @@
                         <child>
                           <object class="GtkButton" id="pla_button_rezy">
                             <property name="label" translatable="yes">VYPÁLIT</property>
-                            <property name="name">2,3,0,0</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="margin_right">10</property>
-                            <property name="margin_end">10</property>
+                            <property name="margin_end">20</property>
                             <property name="margin_bottom">10</property>
-                            <signal name="clicked" handler="on_genericComboValue_clicked" object="pla_combo_rezy" swapped="no"/>
+                            <signal name="clicked" handler="on_genericCombo_changed" object="pla_combo_rezy" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1717,19 +1551,82 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkComboBox" id="pla_combo_rezy">
-                            <property name="name">1,1,2,3</property>
+                          <object class="GtkComboBoxText" id="pla_combo_tvary">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="margin_left">10</property>
                             <property name="margin_start">10</property>
-                            <property name="margin_bottom">10</property>
-                            <property name="model">pla_list_rezy</property>
+                            <property name="active">0</property>
                             <property name="has_entry">True</property>
-                            <property name="entry_text_column">0</property>
+                            <items>
+                              <item translatable="yes">Nevybráno</item>
+                              <item translatable="yes">Nožky</item>
+                              <item translatable="yes">Lichoběžník</item>
+                              <item translatable="yes">Čtverec</item>
+                              <item translatable="yes">Oblouk</item>
+                              <item translatable="yes">Srdce</item>
+                            </items>
                             <child internal-child="entry">
                               <object class="GtkEntry">
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="editable">False</property>
+                                <property name="text" translatable="yes">Nevybráno</property>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="pla_combo_pozice">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_start">10</property>
+                            <property name="active">0</property>
+                            <property name="has_entry">True</property>
+                            <items>
+                              <item translatable="yes">Nevybráno</item>
+                              <item translatable="yes">Uřež bok</item>
+                              <item translatable="yes">Napůlit bok</item>
+                              <item translatable="yes">Uřež dno</item>
+                              <item translatable="yes">Uřež dlouhé dno</item>
+                              <item translatable="yes">Napůlit dlouhé/horní</item>
+                              <item translatable="yes">Napůlit dlouhé/dolní</item>
+                            </items>
+                            <child internal-child="entry">
+                              <object class="GtkEntry">
+                                <property name="can_focus">False</property>
+                                <property name="editable">False</property>
+                                <property name="text" translatable="yes">Nevybráno</property>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="pla_combo_rezy">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_start">10</property>
+                            <property name="margin_bottom">10</property>
+                            <property name="active">0</property>
+                            <property name="has_entry">True</property>
+                            <items>
+                              <item translatable="yes">Nevybráno</item>
+                              <item translatable="yes">Uřež bok</item>
+                              <item translatable="yes">Napůlit bok</item>
+                              <item translatable="yes">Uřež dno</item>
+                              <item translatable="yes">Uřež dlouhé dno</item>
+                              <item translatable="yes">Napůlit dlouhé/horní</item>
+                              <item translatable="yes">Napůlit dlouhé/dolní</item>
+                            </items>
+                            <child internal-child="entry">
+                              <object class="GtkEntry">
+                                <property name="can_focus">False</property>
                               </object>
                             </child>
                           </object>
@@ -1871,12 +1768,12 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="rovv_button_levo">
-                            <property name="name">4,1,val,1</property>
+                            <property name="name">4, 1, val, 1</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="hexpand">True</property>
-                            <signal name="clicked" handler="on_genericValue_clicked" object="rovv_entry" swapped="no"/>
+                            <signal name="clicked" handler="on_rovvValue_clicked" swapped="no"/>
                             <child>
                               <object class="GtkBox">
                                 <property name="visible">True</property>
@@ -1923,7 +1820,7 @@
                             <property name="receives_default">True</property>
                             <property name="margin_end">10</property>
                             <property name="hexpand">True</property>
-                            <signal name="clicked" handler="on_genericValue_clicked" object="rovv_entry" swapped="no"/>
+                            <signal name="clicked" handler="on_rovvValue_clicked" swapped="no"/>
                             <child>
                               <object class="GtkBox">
                                 <property name="visible">True</property>
@@ -2065,6 +1962,7 @@
                             <property name="margin_start">10</property>
                             <property name="margin_end">10</property>
                             <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                             <child>
                               <object class="GtkBox">
                                 <property name="visible">True</property>
@@ -2538,11 +2436,10 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkEntry" id="lis_entry_posun1">
-                                <property name="name">2,1,val,0</property>
+                              <object class="GtkEntry" id="lis_entry_tlak">
+                                <property name="name">2, 18, val, 0</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="margin_left">10</property>
                                 <property name="margin_start">10</property>
                                 <property name="hexpand">True</property>
                                 <property name="input_purpose">number</property>
@@ -2560,6 +2457,7 @@
                                 <property name="receives_default">True</property>
                                 <property name="tooltip_text" translatable="yes">Horizontalni posuv. Do vedlejsiho pole zadejte ciselnou hodnotu v mm</property>
                                 <property name="hexpand">True</property>
+                                <signal name="clicked" handler="on_genericValue_clicked" object="lis_entry_tlak" swapped="no"/>
                                 <child>
                                   <object class="GtkBox">
                                     <property name="visible">True</property>
@@ -2580,7 +2478,6 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="margin_left">5</property>
                                         <property name="margin_start">5</property>
                                         <property name="label" translatable="yes">TLAK</property>
                                       </object>
@@ -2613,7 +2510,6 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="tooltip_text" translatable="yes">Provede homing za pouziti snimace pohybu.</property>
-                            <property name="margin_right">10</property>
                             <property name="margin_end">10</property>
                           </object>
                           <packing>

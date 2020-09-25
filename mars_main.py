@@ -41,6 +41,7 @@ class Handlers:
             self.app.serial.disconnect()
             label.set_text("Status: Odpojeno")
             self.app.serialthread.pause()
+            on_port_combobox_popdown(self, combo)
 
     def on_mainWindow_show(self, window):
         combo = self.app.builder.get_object("port_combobox")
@@ -56,12 +57,12 @@ class Handlers:
     def on_lis_toggle_vyhazovace_toggled(self, toggle):
         tag = toggle.get_name()
         state = toggle.get_active()
-        print(tag)
+        #print(tag)
 
     def on_genericButton_clicked(self, button):
         tag = button.get_name()
         cmd = tag.split(',')
-        print(cmd)
+        #print(cmd)
         self.app.serial.write(cmd)
 
     def on_genericToggle_toggled(self, toggle):
@@ -69,17 +70,18 @@ class Handlers:
         state = toggle.get_active()
         cmd = tag.split(',') #get list
         cmd[3] = int(state) #1 or 0
-        print(cmd) #debug
+        #print(cmd) #debug
         self.app.serial.write(cmd)
 
     def on_genericValue_clicked(self, entry):
         tag = entry.get_name()
         val = entry.get_text()
         cmd = tag.split(',') #get list
-        if cmd[2] == '':
-            cmd[2] = 0
+        if val == '':
+            val = "0"
+            entry.set_text("0")
         cmd[2] = int(val) #val
-        print(cmd) #debug
+        #print(cmd) #debug
         self.app.serial.write(cmd)
 
     def on_genericCombo_changed(self, combo):
@@ -88,32 +90,50 @@ class Handlers:
         if val != 0:
             cmd = tag.split(',') #get list
             cmd[2] = int(val) - 1 #val BUT nevybrano
-            print(cmd) #debug
+            #print(cmd) #debug
             self.app.serial.write(cmd)
 
     def on_genericJog_clicked(self, button):
         pass
 
     def on_rov_button_levo_pressed(self, button):
-        pass
+        tag = "1,2,0,0"
+        cmd = tag.split(',') #get list
+        self.app.serial.write(cmd)
 
     def on_rov_button_levo_released(self, button):
-        pass
+        tag = "1,1,0,0"
+        cmd = tag.split(',') #get list
+        self.app.serial.write(cmd)
 
     def on_rov_button_pravo_pressed(self, button):
-        pass
+        tag = "1,3,0,0"
+        cmd = tag.split(',') #get list
+        self.app.serial.write(cmd)
 
     def on_rov_button_pravo_released(self, button):
-        pass
+        tag = "1,1,0,0"
+        cmd = tag.split(',') #get list
+        self.app.serial.write(cmd)
 
-    def on_genericComboValue_clicked(self, combo):
-        tag = combo.get_name()
-        val = combo.get_active()
-        if val != 0:
-            cmd = tag.split(',') #get list
-            cmd[2] = int(val) - 1 #val BUT nevybrano
-            print(cmd) #debug
-            self.app.serial.write(cmd)
+    def on_rovvValue_clicked(self, button):
+        tag = button.get_name()
+        entry = self.app.builder.get_object("rovv_entry")
+        val = entry.get_text()
+        cmd = tag.split(',') #get list
+        if val == '':
+            val = "0"
+            entry.set_text("0")
+        cmd[2] = int(val) #val
+        #print(cmd) #debug
+        self.app.serial.write(cmd)
+
+    def on_port_combobox_popdown(self, combo):
+        logger.debug("popdown")
+        combo.remove_all()
+        available = self.app.serial.list_ports()
+        for p in available:
+            combo.append_text(p)  # it has be [list] or (tuple,) to work
 
     # ----------------------------------------------------------------------GUI SIGNAL
     def on_mainWindow_destroy(self, window):
@@ -139,7 +159,8 @@ class Application():
 
     def manage_info(self, que):
         data = que.get()
-        logger.debug("Managed: %s" % data)
+        text = self.builder.get_object("info_textbox_master").textBuffer()
+        text.set_text("Prijato: %s" % data)
 
     def read_thread(self, stream, que):
         stream.read_queue(que)
