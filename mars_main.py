@@ -7,8 +7,7 @@ logger = logging.getLogger("log")
 logger.setLevel("DEBUG")
 
 #import my code
-import mars_serial, mars_plot
-from module_job import Job
+import mars_serial, mars_plot, mars_thread
 
 #import GTK
 from gi.repository import Gtk, Gdk, GLib
@@ -25,6 +24,7 @@ class Handlers:
     def __init__(self, caller):
         self.app = caller
     # ----------------------------------------------------------------------USER ACTION
+
     def on_port_toggle_toggled(self, toggle):
         label = self.app.builder.get_object("port_label")
         combo = self.app.builder.get_object("port_combobox")
@@ -41,7 +41,12 @@ class Handlers:
             self.app.serial.disconnect()
             label.set_text("Status: Odpojeno")
             self.app.serialthread.pause()
-            on_port_combobox_popdown(self, combo)
+
+    def on_port_button_clicked(self, combo):
+        combo.remove_all()
+        available = self.app.serial.list_ports()
+        for p in available:
+            combo.append_text(p)  # it has be [list] or (tuple,) to work
 
     def on_mainWindow_show(self, window):
         combo = self.app.builder.get_object("port_combobox")
@@ -94,7 +99,8 @@ class Handlers:
             self.app.serial.write(cmd)
 
     def on_genericJog_clicked(self, button):
-        pass
+        self.on_question_clicked(button)
+        logger.debug("jog")
 
     def on_rov_button_levo_pressed(self, button):
         tag = "1,2,0,0"
@@ -128,13 +134,10 @@ class Handlers:
         #print(cmd) #debug
         self.app.serial.write(cmd)
 
-    def on_port_combobox_popdown(self, combo):
-        logger.debug("popdown")
-        combo.remove_all()
-        available = self.app.serial.list_ports()
-        for p in available:
-            combo.append_text(p)  # it has be [list] or (tuple,) to work
-
+    def on_leg_button_zacni_clicked(self, button):
+        pass
+    def on_leg_button_vyrob_clicked(self, button):
+        pass
     # ----------------------------------------------------------------------GUI SIGNAL
     def on_mainWindow_destroy(self, window):
         Gtk.main_quit()
@@ -142,6 +145,24 @@ class Handlers:
     def on_numericEntry_changed(self, entry):
         text = entry.get_text().strip()
         entry.set_text(''.join([i for i in text if i in '0123456789']))
+    
+    def on_question_clicked(self, widget):
+        dialog = Gtk.MessageDialog(
+            flags=0,
+            message_type=Gtk.MessageType.QUESTION,
+            buttons=Gtk.ButtonsType.YES_NO,
+            text="This is an QUESTION MessageDialog",
+        )
+        dialog.format_secondary_text(
+            "And this is the secondary text that explains things."
+        )
+        response = dialog.run()
+        if response == Gtk.ResponseType.YES:
+            print("QUESTION dialog closed by clicking YES button")
+        elif response == Gtk.ResponseType.NO:
+            print("QUESTION dialog closed by clicking NO button")
+
+        dialog.destroy()
 
 class Application():
     def __init__(self):
@@ -151,7 +172,7 @@ class Application():
         self.que = queue.Queue()
 
         self.serial = mars_serial.UART()
-        self.serialthread = Job(target=self.read_thread, args=(self.serial, self.que), daemon=True)
+        self.serialthread = mars_thread.Job(target=self.read_thread, args=(self.serial, self.que), daemon=True)
         self.serialthread.start()
 
         self.callbacks = Handlers(self)
@@ -182,11 +203,10 @@ class Application():
         # window.maximize()
         window.set_title("MARS OVLÁDÁNÍ")
         window.show_all()
-
-        # run main loop
         Gtk.main()
         # no commands after this line ---!
 
 if __name__ == "__main__":
     gui = Application()
     gui.show()
+    

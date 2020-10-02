@@ -31,10 +31,8 @@ class Job (threading. Thread):
         self.__alive.clear()    # set to False
 
 if __name__ == "__main__":
-
     def add(num1,num2):
         print('Testju: ', num1 + num2)
-
     j = Job(target=add, args=(1,1))
     j.start()
     time.sleep(1)
