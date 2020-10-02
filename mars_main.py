@@ -19,6 +19,19 @@ my_directory = os.path.dirname(os.path.realpath(__file__))
 glade_file = os.path.join(my_directory, 'environment.glade')
 style_file = os.path.join(my_directory, 'styles.css')
 
+
+class DataManager():
+    def __init(self, app):
+        self.app = app
+
+    #mel by pervest datovy paket na formu kterou by byla schopna zpracovat tato trida
+    def internalize(self, item):
+        #item should be string loaded from queue
+        pass
+    #mel by primo pouzit vnitrni info k uprave panelu
+    def manage_info(self):
+        pass
+
 class Handlers:
     # ----------------------------------------------------------------------INIT
     def __init__(self, caller):
@@ -98,9 +111,23 @@ class Handlers:
             #print(cmd) #debug
             self.app.serial.write(cmd)
 
-    def on_genericJog_clicked(self, button):
-        self.on_question_clicked(button)
-        logger.debug("jog")
+    def on_genericJogPlasma_clicked(self, button):
+        #self.on_question_clicked(button)
+        scale_val = int(self.app.builder.get_object("pla_scale").get_value())
+        tag = button.get_name()
+        cmd = tag.split(',') #get list
+        dist = int(cmd[-1])
+        cmd[-1] = 5 * dist + scale_val #5 je MAX_DIST
+        self.app.serial.write(cmd)
+
+    def on_genericJogCrane_clicked(self, button):
+        #self.on_question_clicked(button)
+        scale_val = int(self.app.builder.get_object("jer_scale").get_value())
+        tag = button.get_name()
+        cmd = tag.split(',') #get list
+        dist = int(cmd[-1])
+        cmd[-1] = 5 * dist + scale_val #5 je MAX_DIST
+        self.app.serial.write(cmd)
 
     def on_rov_button_levo_pressed(self, button):
         tag = "1,2,0,0"
@@ -200,7 +227,7 @@ class Application():
 
         # get Window up and running
         window = self.builder.get_object("mainWindow")
-        # window.maximize()
+        window.maximize()
         window.set_title("MARS OVLÁDÁNÍ")
         window.show_all()
         Gtk.main()

@@ -94,9 +94,14 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkAdjustment" id="pla_adj_slider">
-    <property name="lower">1</property>
+  <object class="GtkAdjustment" id="jer_adj_slider">
     <property name="upper">4</property>
+    <property name="value">1</property>
+    <property name="step_increment">10</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="pla_adj_slider">
+    <property name="upper">3</property>
     <property name="value">1</property>
     <property name="step_increment">10</property>
     <property name="page_increment">10</property>
@@ -202,6 +207,7 @@
             <property name="margin_start">5</property>
             <property name="margin_end">10</property>
             <property name="vexpand">False</property>
+            <property name="column_spacing">5</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
@@ -908,12 +914,14 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">Y-</property>
+                                <property name="name">5, 1, 0, 1</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="margin_start">10</property>
+                                <signal name="clicked" handler="on_genericJogCrane_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -923,12 +931,14 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">X-</property>
+                                <property name="name">5, 1, 0, 3</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="margin_top">10</property>
+                                <signal name="clicked" handler="on_genericJogCrane_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -938,11 +948,13 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">Y+</property>
+                                <property name="name">5, 1, 0, 0</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <signal name="clicked" handler="on_genericJogCrane_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">2</property>
@@ -952,11 +964,13 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">X+</property>
+                                <property name="name">5, 1, 0, 2</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <signal name="clicked" handler="on_genericJogCrane_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -966,6 +980,7 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">Z+</property>
+                                <property name="name">5, 1, 0, 4</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
@@ -974,6 +989,7 @@
                                 <property name="margin_left">20</property>
                                 <property name="margin_start">20</property>
                                 <property name="margin_top">10</property>
+                                <signal name="clicked" handler="on_genericJogCrane_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">3</property>
@@ -983,6 +999,7 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">Z-</property>
+                                <property name="name">5, 1, 0, 5</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
@@ -990,6 +1007,7 @@
                                 <property name="receives_default">True</property>
                                 <property name="margin_left">20</property>
                                 <property name="margin_start">20</property>
+                                <signal name="clicked" handler="on_genericJogCrane_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">3</property>
@@ -997,7 +1015,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkScale">
+                              <object class="GtkScale" id="jer_scale">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="margin_left">20</property>
@@ -1006,7 +1024,7 @@
                                 <property name="margin_end">10</property>
                                 <property name="margin_top">10</property>
                                 <property name="orientation">vertical</property>
-                                <property name="adjustment">pla_adj_slider</property>
+                                <property name="adjustment">jer_adj_slider</property>
                                 <property name="inverted">True</property>
                                 <property name="show_fill_level">True</property>
                                 <property name="round_digits">0</property>
@@ -1026,25 +1044,12 @@
                                   <object class="GtkLabel">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="margin_top">30</property>
                                     <property name="vexpand">True</property>
-                                    <property name="label" translatable="yes">100</property>
+                                    <property name="label" translatable="yes">1</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
-                                    <property name="top_attach">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="vexpand">True</property>
-                                    <property name="label" translatable="yes">50</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">0</property>
-                                    <property name="top_attach">1</property>
+                                    <property name="top_attach">4</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1056,6 +1061,18 @@
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
+                                    <property name="top_attach">3</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="vexpand">True</property>
+                                    <property name="label" translatable="yes">50</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
                                     <property name="top_attach">2</property>
                                   </packing>
                                 </child>
@@ -1064,11 +1081,24 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="vexpand">True</property>
-                                    <property name="label" translatable="yes">1</property>
+                                    <property name="label" translatable="yes">100</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
-                                    <property name="top_attach">3</property>
+                                    <property name="top_attach">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_top">30</property>
+                                    <property name="vexpand">True</property>
+                                    <property name="label" translatable="yes">500</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">0</property>
                                   </packing>
                                 </child>
                               </object>
@@ -1334,12 +1364,14 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">Y-</property>
+                                <property name="name">3, 1, 0, 1</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="margin_start">10</property>
+                                <signal name="clicked" handler="on_genericJogPlasma_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -1349,13 +1381,14 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">X-</property>
+                                <property name="name">3, 1, 0, 3</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="margin_top">10</property>
-                                <signal name="clicked" handler="on_question_clicked" swapped="no"/>
+                                <signal name="clicked" handler="on_genericJogPlasma_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -1365,11 +1398,13 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">Y+</property>
+                                <property name="name">3, 1, 0, 0</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <signal name="clicked" handler="on_genericJogPlasma_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">2</property>
@@ -1379,11 +1414,13 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">X+</property>
+                                <property name="name">3, 1, 0, 2</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <signal name="clicked" handler="on_genericJogPlasma_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -1393,6 +1430,7 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">Z+</property>
+                                <property name="name">3, 1, 0, 4</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
@@ -1400,6 +1438,7 @@
                                 <property name="receives_default">True</property>
                                 <property name="margin_start">20</property>
                                 <property name="margin_top">10</property>
+                                <signal name="clicked" handler="on_genericJogPlasma_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">3</property>
@@ -1409,6 +1448,7 @@
                             <child>
                               <object class="GtkButton">
                                 <property name="label" translatable="yes">Z-</property>
+                                <property name="name">3, 1, 0, 5</property>
                                 <property name="width_request">50</property>
                                 <property name="height_request">50</property>
                                 <property name="visible">True</property>
@@ -1416,6 +1456,7 @@
                                 <property name="receives_default">True</property>
                                 <property name="margin_left">20</property>
                                 <property name="margin_start">20</property>
+                                <signal name="clicked" handler="on_genericJogPlasma_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">3</property>
@@ -1423,7 +1464,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkScale">
+                              <object class="GtkScale" id="pla_scale">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="margin_left">20</property>
