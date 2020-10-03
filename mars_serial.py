@@ -29,7 +29,7 @@ class UART:
     def list_ports(self):
         ports = []
         if sys.platform.startswith('linux'):
-            ports = ['/dev/ttyS0', '/dev/ttyAMA0']
+            ports = ['/dev/ttyS0', '/dev/ttyAMA0', '/dev/ttyUSB0']
         elif sys.platform.startswith('win' or 'msys'):
             options = ['COM%s' % (i + 1) for i in range(32)]
             for port in options:

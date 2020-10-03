@@ -19,6 +19,7 @@ ToDo úlohy jsou označeny podle důležitosti "+num", vyšší číslo => vyš�
 
 #### Tools
 C:\msys64\usr\bin\bash 	-lc
+sed -i "s/\r//" /home/pi/Code/marsPI/mars_main.py	//vymění line endings
 
 #### Setting bashrc
 alias vi=vim

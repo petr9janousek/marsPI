@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #import modules
 import os, sys, logging, serial, queue, time
 
@@ -168,11 +170,11 @@ class Handlers:
     # ----------------------------------------------------------------------GUI SIGNAL
     def on_mainWindow_destroy(self, window):
         Gtk.main_quit()
-        
+
     def on_numericEntry_changed(self, entry):
         text = entry.get_text().strip()
         entry.set_text(''.join([i for i in text if i in '0123456789']))
-    
+
     def on_question_clicked(self, widget):
         dialog = Gtk.MessageDialog(
             flags=0,
@@ -236,4 +238,3 @@ class Application():
 if __name__ == "__main__":
     gui = Application()
     gui.show()
-    
