@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
   <object class="GtkAdjustment" id="BTM_adj_vyrob">
@@ -110,12 +110,9 @@
     <property name="width_request">800</property>
     <property name="height_request">600</property>
     <property name="can_focus">False</property>
-    <property name="icon">res/ikona.png</property>
+    <property name="icon">res\ikona.png</property>
     <signal name="destroy" handler="on_mainWindow_destroy" swapped="no"/>
     <signal name="show" handler="on_mainWindow_show" swapped="no"/>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
@@ -642,7 +639,7 @@
                 <property name="can_focus">False</property>
                 <property name="margin_top">5</property>
                 <child>
-                  <object class="GtkRadioButton" id="radiobutton1">
+                  <object class="GtkRadioButton" id="leg_radio_odvezeni">
                     <property name="label" translatable="yes">S odvezením</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -663,7 +660,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
-                    <property name="group">radiobutton1</property>
+                    <property name="group">leg_radio_odvezeni</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -692,7 +689,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSpinButton">
+              <object class="GtkSpinButton" id="leg_updown_vyrob">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="max_length">2</property>
@@ -711,6 +708,7 @@
             <child>
               <object class="GtkButton" id="leg_button_vyrob">
                 <property name="label" translatable="yes">VYROB</property>
+                <property name="name">0, 1, val, bit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -779,132 +777,16 @@
                         <property name="row_spacing">10</property>
                         <property name="column_spacing">10</property>
                         <child>
-                          <object class="GtkEntry" id="jer_entry_rotace">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="margin_start">10</property>
-                            <property name="hexpand">True</property>
-                            <property name="input_purpose">number</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">0</property>
-                            <property name="top_attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkButton">
                             <property name="label" translatable="yes">ROTACE</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="margin_end">20</property>
                             <signal name="clicked" handler="on_genericValue_clicked" object="jer_entry_rotace" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="top_attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="label" translatable="yes">ODVEZ NOHU</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="margin_start">10</property>
-                            <property name="margin_bottom">10</property>
-                            <property name="hexpand">True</property>
-                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left_attach">0</property>
-                            <property name="top_attach">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="label" translatable="yes">ODVEZ BOK</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="margin_bottom">10</property>
-                            <property name="hexpand">True</property>
-                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="label" translatable="yes">ODVEZ DNO</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="margin_end">10</property>
-                            <property name="margin_bottom">10</property>
-                            <property name="hexpand">True</property>
-                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="top_attach">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="jer_entry_naklon">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="margin_start">10</property>
-                            <property name="hexpand">True</property>
-                            <property name="input_purpose">number</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">0</property>
-                            <property name="top_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="label" translatable="yes">NÁKLON</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="margin_end">20</property>
-                            <signal name="clicked" handler="on_genericValue_clicked" object="jer_entry_naklon" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkToggleButton">
-                            <property name="label" translatable="yes">MAGNET LEVÝ</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="margin_end">10</property>
-                            <signal name="toggled" handler="on_genericToggle_toggled" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="top_attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkToggleButton">
-                            <property name="label" translatable="yes">MAGNET PRAVÝ</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="margin_end">10</property>
-                            <signal name="toggled" handler="on_genericToggle_toggled" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="top_attach">2</property>
                           </packing>
                         </child>
                         <child>
@@ -1136,46 +1018,51 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="jer_button_homeXYZ">
-                            <property name="name">3,4,0,0</property>
+                          <object class="GtkButton">
+                            <property name="label" translatable="yes">ODVEZ NOHU</property>
+                            <property name="name">5, 17, 0, 0</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="margin_start">10</property>
+                            <property name="margin_end">50</property>
                             <property name="hexpand">True</property>
-                            <child>
-                              <object class="GtkBox">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <child>
-                                  <object class="GtkImage">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="stock">gtk-home</property>
-                                    <property name="icon_size">3</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="margin_left">5</property>
-                                    <property name="margin_start">5</property>
-                                    <property name="label" translatable="yes">HOMING XYZ</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                              </object>
-                            </child>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="label" translatable="yes">ODVEZ DNO</property>
+                            <property name="name">5, 18, 0, 0</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="margin_start">10</property>
+                            <property name="margin_end">50</property>
+                            <property name="margin_bottom">10</property>
+                            <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="label" translatable="yes">ODVEZ BOK</property>
+                            <property name="name">5, 19, 0, 0</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="margin_start">10</property>
+                            <property name="margin_end">50</property>
+                            <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -1183,13 +1070,41 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="pla_button_homeR">
-                            <property name="name">3,4,0,0</property>
+                          <object class="GtkToggleButton">
+                            <property name="label" translatable="yes">MAGNET LEVÝ</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="margin_left">10</property>
+                            <property name="margin_bottom">10</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkToggleButton">
+                            <property name="label" translatable="yes">MAGNET PRAVÝ</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="margin_end">10</property>
+                            <property name="margin_bottom">10</property>
+                            <signal name="toggled" handler="on_genericToggle_toggled" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="top_attach">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="pla_button_homeR">
+                            <property name="name">5, 16, 0, 0</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
                             <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                             <child>
                               <object class="GtkBox">
                                 <property name="visible">True</property>
@@ -1226,17 +1141,65 @@
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
-                            <property name="top_attach">3</property>
+                            <property name="top_attach">2</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="pla_button_homeZ">
-                            <property name="name">3,4,0,0</property>
+                          <object class="GtkButton" id="pla_button_homeN">
+                            <property name="name">5, 16, 0, 0</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="margin_end">10</property>
                             <property name="hexpand">True</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="stock">gtk-home</property>
+                                    <property name="icon_size">3</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_left">5</property>
+                                    <property name="margin_start">5</property>
+                                    <property name="label" translatable="yes">HOMING N</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="top_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="pla_button_homeZ">
+                            <property name="name">5, 21, 0, 0</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="margin_end">10</property>
+                            <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
                             <child>
                               <object class="GtkBox">
                                 <property name="visible">True</property>
@@ -1274,6 +1237,80 @@
                           <packing>
                             <property name="left_attach">2</property>
                             <property name="top_attach">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="jer_button_homeXYZ">
+                            <property name="name">5, 2, 0, 0</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="hexpand">True</property>
+                            <signal name="clicked" handler="on_genericButton_clicked" swapped="no"/>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="stock">gtk-home</property>
+                                    <property name="icon_size">3</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_left">5</property>
+                                    <property name="margin_start">5</property>
+                                    <property name="label" translatable="yes">HOMING XYZ</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="label" translatable="yes">NÁKLON</property>
+                            <property name="name">5, 22, 1730, 1</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="margin_start">10</property>
+                            <signal name="clicked" handler="on_genericValue_clicked" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="jer_entry_rotace">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="margin_end">10</property>
+                            <property name="input_purpose">number</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="top_attach">1</property>
                           </packing>
                         </child>
                         <child>
@@ -1570,7 +1607,6 @@
                           <packing>
                             <property name="left_attach">0</property>
                             <property name="top_attach">0</property>
-                            <property name="width">3</property>
                           </packing>
                         </child>
                         <child>
@@ -1609,7 +1645,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="margin_end">20</property>
+                            <property name="margin_end">50</property>
                             <signal name="clicked" handler="on_genericCombo_changed" object="pla_combo_tvary" swapped="no"/>
                           </object>
                           <packing>
@@ -1639,7 +1675,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="margin_end">20</property>
+                            <property name="margin_end">50</property>
                             <signal name="clicked" handler="on_genericCombo_changed" object="pla_combo_pozice" swapped="no"/>
                           </object>
                           <packing>
@@ -1669,7 +1705,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="margin_end">20</property>
+                            <property name="margin_end">50</property>
                             <property name="margin_bottom">10</property>
                             <signal name="clicked" handler="on_genericCombo_changed" object="pla_combo_rezy" swapped="no"/>
                           </object>
@@ -1827,6 +1863,12 @@
                             <property name="left_attach">0</property>
                             <property name="top_attach">1</property>
                           </packing>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
                         </child>
                       </object>
                     </child>
@@ -2270,6 +2312,8 @@
                         <property name="name">gridPress</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="hexpand">False</property>
+                        <property name="vexpand">True</property>
                         <property name="row_spacing">10</property>
                         <property name="column_spacing">10</property>
                         <child>
@@ -2404,6 +2448,7 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="lis_button_posun">
+                                <property name="width_request">80</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
@@ -2476,6 +2521,7 @@
                             </child>
                             <child>
                               <object class="GtkButton">
+                                <property name="width_request">80</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
@@ -2645,6 +2691,7 @@
                             </child>
                             <child>
                               <object class="GtkButton">
+                                <property name="width_request">80</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
@@ -3302,6 +3349,9 @@
           </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
   <object class="GtkListStore" id="port_list">

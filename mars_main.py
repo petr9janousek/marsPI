@@ -166,7 +166,14 @@ class Handlers:
     def on_leg_button_zacni_clicked(self, button):
         pass
     def on_leg_button_vyrob_clicked(self, button):
-        pass
+        take = self.app.builder.get_object("leg_radio_odvezeni").get_active()
+        value = self.app.builder.get_object("leg_updown_vyrob").get_value()
+        tag = button.get_name()
+        cmd = tag.split(',')
+        cmd[2] = value
+        cmd[3] = take
+        self.app.serial.write(cmd)
+        0, 1, (short)(AUTO_numeric_vyrobNohu.Value), withCrane
     # ----------------------------------------------------------------------GUI SIGNAL
     def on_mainWindow_destroy(self, window):
         Gtk.main_quit()
