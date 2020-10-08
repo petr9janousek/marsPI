@@ -34,10 +34,33 @@ class DataManager():
     def manage_info(self):
         pass
 
+class Command:
+    cmd_list = {
+        "name1": "1,2,3,4",
+        "name2": "2,3,4,5",
+        "name3": "3,4,5,6",
+    }
+    
+    def make_listed(self, name, **kwargs):
+        cmd = cmd_list.get(name)
+        make_mew(cmd, kwargs)
+
+    def make_new(self, name, **kwargs):
+        cmd = name
+        if kwargs.get('adr', None):
+            cmd[0] = kwargs['adr']
+        if kwargs.get('cmd', None):
+            cmd[1] = kwargs['cmd']
+        if kwargs.get('val', None):
+            cmd[2] = kwargs['val']
+        if kwargs.get('bit', None):
+            cmd[3] = kwargs['val']
+        return  cmd
 class Handlers:
     # ----------------------------------------------------------------------INIT
     def __init__(self, caller):
         self.app = caller
+        self.cmd = Command()
     # ----------------------------------------------------------------------USER ACTION
 
     def on_port_toggle_toggled(self, toggle):
@@ -163,8 +186,13 @@ class Handlers:
         #print(cmd) #debug
         self.app.serial.write(cmd)
 
-    def on_leg_button_zacni_clicked(self, button):
-        pass
+    def on_leg_button_hotovo_clicked(self, button):
+        value = self.app.builder.get_object("leg_updown_hotovo").get_value()
+        tag = button.get_name()
+        cmd = tag.split(',')
+        cmd[2] = value
+        self.app.serial.write(cmd)
+
     def on_leg_button_vyrob_clicked(self, button):
         take = self.app.builder.get_object("leg_radio_odvezeni").get_active()
         value = self.app.builder.get_object("leg_updown_vyrob").get_value()
@@ -173,7 +201,38 @@ class Handlers:
         cmd[2] = value
         cmd[3] = take
         self.app.serial.write(cmd)
-        0, 1, (short)(AUTO_numeric_vyrobNohu.Value), withCrane
+    
+    def on_side_button_zacni_clicked(self, button):
+        big = self.app.builder.get_object("side_radio_big").get_active()
+        value = self.app.builder.get_object("side_updown_vyrob").get_value()
+        tag = button.get_name()
+        cmd = tag.split(',')
+        cmd[2] = value
+        cmd[3] = big
+        self.app.serial.write(cmd)
+
+    def on_side_button_vyrob_clicked(self, button):
+        pass
+
+    def on_bottom_button_vyrob_clicked(self, button):
+        size1100 = self.app.builder.get_object("bottom_radio_1100").get_active()
+        value = self.app.builder.get_object("bottom_updown_vyrob").get_value()
+        tag = button.get_name()
+        cmd = tag.split(',')
+        cmd[2] = value
+        cmd[3] = size1100
+        self.app.serial.write(cmd)
+    
+    def on_bottom_button_zacni_clicked(self, button):
+        pass
+
+    def on_control_button_on_clicked(self, button):
+        _val = self.app.builder.get_object("control_combo").get_active()
+        _bit = self.app.builder.get_object("control_entry").get_text()
+        _cmd = button.get_name().split(',')
+        _msg = self.cmd.make_new(_cmd, val=_val, bit=_bit)
+        self.app.serial.write(_msg)
+
     # ----------------------------------------------------------------------GUI SIGNAL
     def on_mainWindow_destroy(self, window):
         Gtk.main_quit()

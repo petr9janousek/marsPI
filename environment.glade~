@@ -94,6 +94,32 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkListStore" id="control_list">
+    <columns>
+      <!-- column-name functions -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nevybráno</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Malý ovladač</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Bok-pokračuj</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Noha-odvez</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Půlit bok</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Půlit dno</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkAdjustment" id="jer_adj_slider">
     <property name="upper">4</property>
     <property name="value">1</property>
@@ -326,7 +352,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="control_button_on">
                 <property name="label" translatable="yes">ZAPNOUT</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -339,7 +365,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="control_button_off">
                 <property name="label" translatable="yes">VYPNOUT</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -356,6 +382,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
+                <property name="model">control_list</property>
                 <property name="has_entry">True</property>
                 <property name="entry_text_column">0</property>
                 <child internal-child="entry">
@@ -370,17 +397,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkComboBox">
+              <object class="GtkEntry" id="control_entry">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="hexpand">True</property>
-                <property name="has_entry">True</property>
-                <property name="entry_text_column">0</property>
-                <child internal-child="entry">
-                  <object class="GtkEntry">
-                    <property name="can_focus">False</property>
-                  </object>
-                </child>
+                <property name="can_focus">True</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -401,12 +421,14 @@
             <property name="margin_end">5</property>
             <property name="vexpand">False</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="bottom_button_zacni">
                 <property name="label" translatable="yes">ZAČNI OD</property>
+                <property name="name">0, 8, val, bit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="hexpand">True</property>
+                <signal name="clicked" handler="on_bottom_button_zacni_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -425,12 +447,14 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="bottom_button_vyrob">
                 <property name="label" translatable="yes">VYROB</property>
+                <property name="name">0, 3, val, bit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="hexpand">True</property>
+                <signal name="clicked" handler="on_bottom_button_vyrob_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -438,7 +462,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSpinButton">
+              <object class="GtkSpinButton" id="bottom_updown_vyrob">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="adjustment">BTM_adj_vyrob</property>
@@ -467,7 +491,7 @@
                 <property name="can_focus">False</property>
                 <property name="margin_top">5</property>
                 <child>
-                  <object class="GtkRadioButton" id="radiobutton5">
+                  <object class="GtkRadioButton" id="bottom_radio_1100">
                     <property name="label" translatable="yes">Plech 1100</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -488,7 +512,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
-                    <property name="group">radiobutton5</property>
+                    <property name="group">bottom_radio_1100</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -517,12 +541,14 @@
             <property name="margin_end">5</property>
             <property name="vexpand">False</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="side_button_zacni">
                 <property name="label" translatable="yes">ZAČNI OD</property>
+                <property name="name">0, 4, val, bit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="hexpand">True</property>
+                <signal name="clicked" handler="on_side_button_zacni_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -541,12 +567,14 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="side_button_vyrob">
                 <property name="label" translatable="yes">VYROB</property>
+                <property name="name">0, 2, val, bit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="hexpand">True</property>
+                <signal name="clicked" handler="on_side_button_vyrob_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -572,7 +600,7 @@
                 <property name="can_focus">False</property>
                 <property name="margin_top">5</property>
                 <child>
-                  <object class="GtkRadioButton" id="radiobutton3">
+                  <object class="GtkRadioButton" id="side_radio_big">
                     <property name="label" translatable="yes">Velké dno</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -593,7 +621,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
-                    <property name="group">radiobutton3</property>
+                    <property name="group">side_radio_big</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -609,7 +637,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSpinButton">
+              <object class="GtkSpinButton" id="side_updown_vyrob">
                 <property name="name">side_numeric_create</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -721,7 +749,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSpinButton">
+              <object class="GtkSpinButton" id="leg_updown_hotovo">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="adjustment">LEG_adj_zacniod</property>
@@ -732,13 +760,14 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="leg_button_zacni">
-                <property name="label" translatable="yes">ZAČNI OD</property>
+              <object class="GtkButton" id="leg_button_hotovych">
+                <property name="label" translatable="yes">HOTOVO</property>
+                <property name="name">5, 20, val, 0</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="hexpand">True</property>
-                <signal name="clicked" handler="on_leg_button_zacni_clicked" swapped="no"/>
+                <signal name="clicked" handler="on_leg_button_hotovo_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -1015,6 +1044,7 @@
                           <packing>
                             <property name="left_attach">0</property>
                             <property name="top_attach">0</property>
+                            <property name="width">3</property>
                           </packing>
                         </child>
                         <child>
@@ -1313,12 +1343,6 @@
                             <property name="top_attach">1</property>
                           </packing>
                         </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
                       </object>
                     </child>
                     <child type="tab">
@@ -1607,6 +1631,7 @@
                           <packing>
                             <property name="left_attach">0</property>
                             <property name="top_attach">0</property>
+                            <property name="width">3</property>
                           </packing>
                         </child>
                         <child>
@@ -1863,12 +1888,6 @@
                             <property name="left_attach">0</property>
                             <property name="top_attach">1</property>
                           </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
                         </child>
                       </object>
                     </child>
