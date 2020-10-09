@@ -11,7 +11,7 @@ ToDo úlohy jsou označeny podle důležitosti "+num", vyšší číslo => vyš�
 * +3 - Handlers - neměl by se předávat celý rodič pouze builder a komunikace (uart/can)
 * +5 - Handlers - dopsat všechny funkce
 * +2 - Nastavení - vytvořit pomocí stromových struktur, configParser/XML?
-
+* +3 - Handlers - vytvořit třídu stream do kterého by byl uložen serial i thread 
 #### Dependencies 
 "pacman -Syuu"
 "pacman -S mingw-w64-x86_64-gtk3"

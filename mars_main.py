@@ -35,18 +35,14 @@ class DataManager():
         pass
 
 class Command:
-    cmd_list = {
+    pallete = {
         "name1": "1,2,3,4",
         "name2": "2,3,4,5",
-        "name3": "3,4,5,6",
+        "name3": "3,4,5,6"
     }
     
-    def make_listed(self, name, **kwargs):
-        cmd = cmd_list.get(name)
-        make_mew(cmd, kwargs)
-
-    def make_new(self, name, **kwargs):
-        cmd = name
+    def listed(self, name, **kwargs):
+        cmd = Command.pallete.get(name).split(",")
         if kwargs.get('adr', None):
             cmd[0] = kwargs['adr']
         if kwargs.get('cmd', None):
@@ -56,10 +52,17 @@ class Command:
         if kwargs.get('bit', None):
             cmd[3] = kwargs['val']
         return  cmd
+
+    def new(self, name, value):
+        Command.pallete['name'] = str(value)
+        return value.split(",")
+
 class Handlers:
     # ----------------------------------------------------------------------INIT
-    def __init__(self, caller):
+    def __init__(self, caller, builder, serial):
         self.app = caller
+        self.builder = builder
+        self.serial = serial
         self.cmd = Command()
     # ----------------------------------------------------------------------USER ACTION
 
@@ -270,13 +273,13 @@ class Application():
         self.serialthread = mars_thread.Job(target=self.read_thread, args=(self.serial, self.que), daemon=True)
         self.serialthread.start()
 
-        self.callbacks = Handlers(self)
+        self.callbacks = Handlers(self, self.builder, self.serial)
         self.builder.connect_signals(self.callbacks)
 
     def manage_info(self, que):
         data = que.get()
-        text = self.builder.get_object("info_textbox_master").textBuffer()
-        text.set_text("Prijato: %s" % data)
+        text = self.builder.get_object("info_textbox_master").get_buffer()
+        text.set_text("Prijato: %s" % (data))
 
     def read_thread(self, stream, que):
         stream.read_queue(que)
