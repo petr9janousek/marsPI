@@ -1,30 +1,42 @@
 # coding UTF-8
 import serial, queue, sys, logging
 
+import mars_thread
+from gi.repository import GLib
+
 logger = logging.getLogger("log.serial")
 
 class UART:
-    def __init__(self):
+    def __init__(self, manager):
         self.serial = serial.Serial()
         self.serial.baudrate = 115200
         self.serial.timeout = 1 #s
+
+        self.manager = manager
+
+        self.serialthread = mars_thread.Job(target=self.read_thread, daemon=True)
+        self.serialthread.start()
+
+    def read_thread(self):
+        if self.serial.in_waiting > 0:
+            self.read_queue(self.manager.data_que)
+        if not self.manager.data_que.empty():
+            GLib.idle_add(self.manager.manage_info)
+    
 
     def connect(self, port):
         self.serial.port = port
 
         if self.serial.isOpen():
-            #logger.warning('Port %s je jiz pripojen', port)
-            print('Port %s je jiz pripojen' % port)
+            logger.warning('Port %s je jiz pripojen', port)
         else:
             self.serial.open()
             logger.info('Pripojeno na portu %s', port)
-            #print('Pripojeno na portu %s' % port)
 
     def disconnect(self):
         if self.serial.isOpen():
             self.serial.close()
-            #logger.info("Port odpojen")
-            print("Port odpojen")
+            logger.info("Port odpojen")
 
     def list_ports(self):
         ports = []

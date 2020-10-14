@@ -9,15 +9,18 @@ class Job (threading. Thread):
         self.__active.clear()    # set to True
         self.__alive = threading.Event()   # to stop the thread's identity
         self.__alive.set()   # Set to True
-        self.__target = kwargs['target']
-        self.__args = kwargs['args']
+        self.__target = kwargs.get('target', None)
+        self.__args = kwargs.get('args', None)
         #public
         self.speed = 0.1
 
     def run(self):
         while self.__alive.is_set():
             self.__active.wait()   # returns immediately when false, blocking until the internal identity bit is true to return
-            self.__target(*self.__args)   #calls the target, unpacks the tuple
+            if self.__args:
+                self.__target(*self.__args)   #calls the target, unpacks the tuple
+            else:
+                self.__target()
             time.sleep(self.speed)
 
     def pause(self):
