@@ -54,31 +54,57 @@ class Settings():
     def read_bool(self, section, key):
             return self.config.getboolean(section, key)
 
-    def save(self):
-        pass
-
-    def fill(self, treeView, section):
-        pass
-
 #ADR (from), CMD (type of info), VAL VAL (short1) VAL VAL (short2) VAL VAL (short3)
 class Manager():
     def __init__(self, builder):
         self.builder = builder      #for access to components
         self.data_que = queue.Queue()       #internally creates a queue in which data will be stored
 
+    def state(self, *args):
+        print([x for x in args])
+
+    def sensor(self, *args):
+        pass
+
+    def default(self, *args):
+        pass
+
+    def actuator(self, *args):
+        toggle = self.builder.get_object("lis_toggle_vyhazovace")
+        print(toggle.get_active())
+        #block signal to not emitt the signal twice
+        toggle.handler_block_by_func(self.on_genericToggle_toggled)
+        toggle.set_active(True)
+        toggle.handler_unblock_by_func(self.on_genericToggle_toggled)
+
+    def other(self, *args):
+        pass
+
+    actions = { -1: default, 0: state, 1: sensor, 2: actuator, 3: other}
+
+    def call_action(self, act_key, *args):
+        try:
+            self.actions[act_key](args)
+        except KeyError:
+            self.actions[default]
+        #return self.actions.get(act_key, lambda *_: "ERROR: Invalid action key")(*args)
+
     #mel by pervest datovy paket na formu kterou by byla schopna zpracovat tato trida
     def internalize(self, item):
-        #what part of window?
-        #do I need a component?
-        #what text should display?
+        time_stamp = time.strftime("%H:%M:%S", time.localtime())
+        print(time_stamp)
+        manage_as(item[0], item[1], item[2:], time_stamp)
         
-        pass
     #mel by primo pouzit vnitrni info k uprave panelu
     def manage_info(self):
-        data = self.data_que.get()
-        self.internalize(data)
-        text = self.builder.get_object("info_textbox_master").get_buffer()
-        text.set_text("Prijato: %s" % (data))
+        data = [1,2,3,4,5,6,7,8]  
+        self.data_que.get()
+        self.call_action(0, "hello", " sir!", "?")
+        #self.internalize(data)
+        #self.show()
+        #text = self.builder.get_object("info_textbox_master").get_buffer()
+        #text.set_text("Prijato: %s" % (data))
+
 
 class Command:
     pallete = {

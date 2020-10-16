@@ -56,7 +56,7 @@ class UART:
             print("Nepodporovana platforma")
         return ports
 
-    def code(self, data):
+    def uart_code(self, data):
         result, element = [], int(data)
         #for element in val:
         nibbleA = (element & 0xF0) >> 4   # high nibble
@@ -65,6 +65,9 @@ class UART:
         result.append((nibbleA + 0x30) if (nibbleA < 0x0A) else (nibbleA + 0x37))
         result.append((nibbleB + 0x30) if (nibbleB < 0x0A) else (nibbleB + 0x37))
         return result
+
+    def uart_decode(self, data):
+        pass
 
     def read_bytes(self, count = 1):
         if self.serial.isOpen():
@@ -80,8 +83,9 @@ class UART:
             line = self.serial.read_until(eol.encode())  # to pass as number
             line = line.decode()
             if line.strip(): #contains data
-                #logger.debug("Prijato", line)
+                line = line.split(',')
                 queue.put(line) # to pass as string
+        #return [1,2,3,4,5,6,7,8]
 
     def write(self, data_list):
         if self.serial.isOpen():
@@ -95,7 +99,7 @@ class UART:
             data_list.append(sum(data_list))
             logger.info("Odesilam: %s", data_list)
             #create encoding
-            data_list = [self.code(e) for e in data_list]
+            data_list = [self.uart_code(e) for e in data_list]
             flat_list = [item for sublist in data_list for item in sublist]
             #insert flow control characters
             flat_list.insert(0, 42)
@@ -106,7 +110,7 @@ class UART:
 
 if __name__ == "__main__":
     print("Testovaci rezim")
-    sp = UART()
+    sp = UART(lambda: None)
     q = queue.Queue()
 
     l = sp.list_ports()
