@@ -61,7 +61,8 @@ class Manager():
         self.data_que = queue.Queue()       #internally creates a queue in which data will be stored
 
     def state(self, *args):
-        print([x for x in args])
+        pass
+        #print([x for x in args])
 
     def sensor(self, *args):
         pass
@@ -69,37 +70,45 @@ class Manager():
     def default(self, *args):
         pass
 
+    #dataclass?
+    actuators = {
+        0: "lis_toggle_vyhazovace", 
+        1: "lis_toggle_pritlak",
+        2: "lis_toggle_kopyto",
+        3: "lis_toggle_forma"
+    }
     def actuator(self, *args):
-        toggle = self.builder.get_object("lis_toggle_vyhazovace")
-        print(toggle.get_active())
+        toggle = self.builder.get_object(actuators[args[2]])
         #block signal to not emitt the signal twice
         toggle.handler_block_by_func(self.on_genericToggle_toggled)
-        toggle.set_active(True)
+        toggle.set_active(args[3])
         toggle.handler_unblock_by_func(self.on_genericToggle_toggled)
+
+    def message(self, *args):
+        pass
 
     def other(self, *args):
         pass
 
-    actions = { -1: default, 0: state, 1: sensor, 2: actuator, 3: other}
-
+    actions = { -1: default, 0: state, 1: sensor, 2: actuator, 3: message, 4: other}
+    #machines = { 0: , 1, 2, 3, 4, 5}
     def call_action(self, act_key, *args):
         try:
-            self.actions[act_key](args)
+            self.actions[act_key](self, args)
         except KeyError:
             self.actions[default]
         #return self.actions.get(act_key, lambda *_: "ERROR: Invalid action key")(*args)
 
     #mel by pervest datovy paket na formu kterou by byla schopna zpracovat tato trida
-    def internalize(self, item):
+    def internalize(self, data):
         time_stamp = time.strftime("%H:%M:%S", time.localtime())
-        print(time_stamp)
-        manage_as(item[0], item[1], item[2:], time_stamp)
+        self.call_action(data[1], data)
         
     #mel by primo pouzit vnitrni info k uprave panelu
     def manage_info(self):
-        data = [1,2,3,4,5,6,7,8]  
-        self.data_que.get()
-        self.call_action(0, "hello", " sir!", "?")
+        #machine, message, thing, val
+        data = self.data_que.get()
+        #self.internalize(data.split(","))
         #self.internalize(data)
         #self.show()
         #text = self.builder.get_object("info_textbox_master").get_buffer()
@@ -149,7 +158,7 @@ class Handlers:
         combo = self.builder.get_object("port_combobox")
         text = combo.get_active_text()
         if text == "Nevybráno":
-            label.set_text("Vyberte port")
+            label.set_text("Status: Vyberte nejprve port")
             toggle.set_active(False)
             return
         if toggle.get_active():
@@ -169,14 +178,19 @@ class Handlers:
 
     def on_mainWindow_show(self, window):
         combo = self.builder.get_object("port_combobox")
-        available = self.serial.list_ports()
-        for p in available:
-            combo.append_text(p)  # it has be [list] or (tuple,) to work
-        check = self.builder.get_object("port_checkbox")
-        if check.get_active:
-            combo.set_active(1)
-            #toggle = self.builder.get_object("port_toggle")
-            #toggle.set_active(True)
+        auto = self.settings.read_bool("general", "auto_connect") #měl by se připojit?
+        self.builder.get_object("port_checkbox").set_active(auto)  #sežeň a v každém případě změň čudlík
+        if auto:
+            port = self.settings.read("general", "com_port") #k jakému portu
+            combo.prepend_text(port) #vytvoř položku
+            combo.set_active(int(0)) #vytvoř položku
+            self.builder.get_object("port_toggle").set_active(True)
+        else:
+            combo = self.builder.get_object("port_combobox")
+            available = self.serial.list_ports()
+            for p in available:
+                combo.append_text(p)  # it has be [list] or (tuple,) to work
+        
 
     def on_lis_toggle_vyhazovace_toggled(self, toggle):
         tag = toggle.get_name()
@@ -318,7 +332,16 @@ class Handlers:
     def on_set_checkbox_maximize_toggled(self, check):
         checked = str(check.get_active())
         self.settings.write("general", "window_startup_maximize", checked)
-        self.settings.save()
+        #self.settings.save()
+
+    def on_port_checkbox_toggled(self, check):
+        checked = bool(check.get_active())
+        self.settings.write("general", "auto_connect", str(checked))
+        if checked:
+            com = self.builder.get_object("port_combobox").get_active_text()
+            logger.debug(com)
+            self.settings.write("general", "com_port", str(com))
+        #self.settings.save()
 
     def on_lis_selector_changed(self, selector):
         par = self.builder.get_object("lis_settings_entry_par")

@@ -271,6 +271,7 @@
                 <property name="margin_top">10</property>
                 <property name="active">True</property>
                 <property name="draw_indicator">True</property>
+                <signal name="toggled" handler="on_port_checkbox_toggled" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -1393,7 +1394,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <signal name="clicked" handler="on_jer_settings_button_clicked" object="jer_treeview" swapped="no"/>
+                            <signal name="clicked" handler="on_jer_settings_button_clicked" object="jer_selector" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -2083,7 +2084,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <signal name="clicked" handler="on_pla_settings_button_clicked" object="pla_treeview" swapped="no"/>
+                            <signal name="clicked" handler="on_pla_settings_button_clicked" object="pla_selector" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -2594,7 +2595,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <signal name="clicked" handler="on_rov_settings_button_clicked" object="rov_treeview" swapped="no"/>
+                            <signal name="clicked" handler="on_rov_settings_button_clicked" object="rov_selector" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -3899,8 +3900,8 @@
                     <signal name="toggled" handler="on_set_checkbox_maximize_toggled" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="x">17</property>
-                    <property name="y">16</property>
+                    <property name="x">10</property>
+                    <property name="y">20</property>
                   </packing>
                 </child>
               </object>
