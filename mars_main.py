@@ -26,7 +26,7 @@ init_file = os.path.join(my_directory, 'config.ini')
 class Settings():
     def __init__(self, builder):
         self.config = configparser.ConfigParser()
-        self.config.read(init_file)        
+        self.config.read(init_file)
         self.builder = builder
         self.lists = []
         for sec in self.config.sections():
@@ -42,7 +42,7 @@ class Settings():
                 model = next(x for x in self.lists if x.get_name() == ls.get_name())
                 treeview.set_model(model)
             except: pass #no need to react
-        
+
     def write(self, section, option, value):
         self.config.set(section, option, value)
         with open(init_file, 'w') as configfile:
@@ -72,7 +72,7 @@ class Manager():
 
     #dataclass?
     actuators = {
-        0: "lis_toggle_vyhazovace", 
+        0: "lis_toggle_vyhazovace",
         1: "lis_toggle_pritlak",
         2: "lis_toggle_kopyto",
         3: "lis_toggle_forma"
@@ -103,7 +103,7 @@ class Manager():
     def internalize(self, data):
         time_stamp = time.strftime("%H:%M:%S", time.localtime())
         self.call_action(data[1], data)
-        
+
     #mel by primo pouzit vnitrni info k uprave panelu
     def manage_info(self):
         #machine, message, thing, val
@@ -117,16 +117,19 @@ class Manager():
 
 class Command:
     pallete = {
-        "lis_settings_temp": "2, 15, val, bit",
-        "lis_settings_perm": "2, 7, 0, bit",
         "rov_settings_temp": "1, 15, val, bit",
         "rov_settings_perm": "1, 7, 0, bit",
+
+        "lis_settings_temp": "2, 15, val, bit",
+        "lis_settings_perm": "2, 7, 0, bit",
+
         "pla_settings_temp": "3, 15, val, bit",
         "pla_settings_perm": "3, 7, 0, bit",
+
         "jer_settings_temp": "5, 15, val, bit",
         "jer_settings_perm": "5, 7, 0, bit"
     }
-    
+
     def listed(self, name, **kwargs):
         cmd = Command.pallete.get(name).split(",")
         if kwargs.get('adr', None):
@@ -149,7 +152,7 @@ class Handlers:
         #self.app = caller
         self.builder = builder
         self.serial = serial
-        self.settings = settings 
+        self.settings = settings
         self.cmd = Command()
     # ----------------------------------------------------------------------USER ACTION
 
@@ -190,7 +193,7 @@ class Handlers:
             available = self.serial.list_ports()
             for p in available:
                 combo.append_text(p)  # it has be [list] or (tuple,) to work
-        
+
 
     def on_lis_toggle_vyhazovace_toggled(self, toggle):
         tag = toggle.get_name()
@@ -296,7 +299,7 @@ class Handlers:
         cmd[2] = value
         cmd[3] = take
         self.serial.write(cmd)
-    
+
     def on_side_button_zacni_clicked(self, button):
         big = self.builder.get_object("side_radio_big").get_active()
         value = self.builder.get_object("side_updown_vyrob").get_value()
@@ -317,7 +320,7 @@ class Handlers:
         cmd[2] = value
         cmd[3] = size1100
         self.serial.write(cmd)
-    
+
     def on_bottom_button_zacni_clicked(self, button):
         pass
 
@@ -327,7 +330,7 @@ class Handlers:
         _cmd = button.get_name().split(',')
         _msg = self.cmd.make_new(_cmd, val=_val, bit=_bit)
         self.serial.write(_msg)
-    
+
     # ----------------------------------------------------------------------SETTINGS
     def on_set_checkbox_maximize_toggled(self, check):
         checked = str(check.get_active())
@@ -350,7 +353,7 @@ class Handlers:
         tree_iter = model.get_iter(pathlist[0])
         par.set_text(model.get_value(tree_iter,0))
         val.set_text(model.get_value(tree_iter,1))
-    
+
     def on_lis_settings_button_clicked(self, selector):
         par = self.builder.get_object("lis_settings_entry_par").get_text()
         val = self.builder.get_object("lis_settings_entry_val").get_text()
@@ -360,8 +363,8 @@ class Handlers:
         model.set(tree_iter, 1, val)
         self.settings.write("lis", par, val)
         self.serial.write(self.cmd.listed("lis_settings_temp", val=str(val), bit=str(pathlist[0])))
-        self.serial.write(self.cmd.listed("lis_settings_perm", bit=pathlist[0]))  
-    
+        self.serial.write(self.cmd.listed("lis_settings_perm", bit=pathlist[0]))
+
     def on_pla_selector_changed(self, selector):
         par = self.builder.get_object("pla_settings_entry_par")
         val = self.builder.get_object("pla_settings_entry_val")
@@ -369,7 +372,7 @@ class Handlers:
         tree_iter = model.get_iter(pathlist[0])
         par.set_text(model.get_value(tree_iter,0))
         val.set_text(model.get_value(tree_iter,1))
-    
+
     def on_pla_settings_button_clicked(self, selector):
         par = self.builder.get_object("pla_settings_entry_par").get_text()
         val = self.builder.get_object("pla_settings_entry_val").get_text()
@@ -380,7 +383,7 @@ class Handlers:
         self.settings.write("pla", par, val)
         self.serial.write(self.cmd.listed("pla_settings_temp", val=str(val), bit=str(pathlist[0])))
         self.serial.write(self.cmd.listed("pla_settings_perm", bit=pathlist[0]))
-    
+
     def on_rov_selector_changed(self, selector):
         par = self.builder.get_object("rov_settings_entry_par")
         val = self.builder.get_object("rov_settings_entry_val")
@@ -388,7 +391,7 @@ class Handlers:
         tree_iter = model.get_iter(pathlist[0])
         par.set_text(model.get_value(tree_iter,0))
         val.set_text(model.get_value(tree_iter,1))
-    
+
     def on_rov_settings_button_clicked(self, selector):
         par = self.builder.get_object("rov_settings_entry_par").get_text()
         val = self.builder.get_object("rov_settings_entry_val").get_text()
@@ -399,7 +402,7 @@ class Handlers:
         self.settings.write("rov", par, val)
         self.serial.write(self.cmd.listed("rov_settings_temp", val=str(val), bit=str(pathlist[0])))
         self.serial.write(self.cmd.listed("rov_settings_perm", bit=pathlist[0]))
-    
+
     def on_jer_selector_changed(self, selector):
         par = self.builder.get_object("jer_settings_entry_par")
         val = self.builder.get_object("jer_settings_entry_val")
@@ -407,7 +410,7 @@ class Handlers:
         tree_iter = model.get_iter(pathlist[0])
         par.set_text(model.get_value(tree_iter,0))
         val.set_text(model.get_value(tree_iter,1))
-    
+
     def on_jer_settings_button_clicked(self, selector):
         par = self.builder.get_object("jer_settings_entry_par").get_text()
         val = self.builder.get_object("jer_settings_entry_val").get_text()
@@ -418,7 +421,7 @@ class Handlers:
         self.settings.write("jer", par, val)
         self.serial.write(self.cmd.listed("jer_settings_temp", val=str(val), bit=str(pathlist[0])))
         self.serial.write(self.cmd.listed("jer_settings_perm", bit=pathlist[0]))
-    
+
     # ----------------------------------------------------------------------GUI SIGNAL
     def on_mainWindow_destroy(self, window):
         Gtk.main_quit()
@@ -469,7 +472,7 @@ class Application():
 
         # get Window up and running
         window = self.builder.get_object("mainWindow")
-        if self.settings.read_bool("general", "window_startup_maximize"): 
+        if self.settings.read_bool("general", "window_startup_maximize"):
             window.maximize()
         window.set_title("MARS OVLÁDÁNÍ")
         window.show_all()
