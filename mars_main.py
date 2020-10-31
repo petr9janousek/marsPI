@@ -90,9 +90,9 @@ class Manager():
     def other(self, *args):
         pass
 
-    actions = { -1: default, 0: state, 1: sensor, 2: actuator, 3: message, 4: other}
-    #machines = { 0: , 1, 2, 3, 4, 5}
-    def call_action(self, act_key, *args):
+    actions = { -1: default, 0: state, 1: sensor, 2: actuator, 3: other}
+
+    def switch_action(self, act_key, *args):
         try:
             self.actions[act_key](self, args)
         except KeyError:
@@ -106,9 +106,9 @@ class Manager():
 
     #mel by primo pouzit vnitrni info k uprave panelu
     def manage_info(self):
-        #machine, message, thing, val
-        data = self.data_que.get()
-        #self.internalize(data.split(","))
+        data = [1,2,3,4,5,6,7,8]  
+        self.data_que.get()
+        self.switch_action(0, "hello", " sir!", "?")
         #self.internalize(data)
         #self.show()
         #text = self.builder.get_object("info_textbox_master").get_buffer()

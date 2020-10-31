@@ -19,6 +19,7 @@ ToDo úlohy jsou označeny podle důležitosti "+num", vyšší číslo => vyš�
 
 "pacman -S mingw-w64-x86_64-python-matplotlib"
 "pacman -S mingw-w64-x86_64-python-pyserial"
+pacman -S mingw-w64-x86_64-python-pylint
 
 #### Tools
 C:\msys64\usr\bin\bash 	-lc
