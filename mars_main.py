@@ -109,8 +109,7 @@ class Manager():
     #mel by primo pouzit vnitrni info k uprave panelu
     def add_info(self):
         #data = [1,2,3,4,5,6,7,8]
-        print(self.data_que.get())
-        print("SCCS")
+        print(str(self.data_que.get()))
         #self.switch_action(0, "hello", " sir!", "?")
         #self.internalize(data)
         #self.show()
@@ -460,7 +459,6 @@ class Application():
         self.manager = Manager(self.builder)
         self.serial = mars_serial.UART(self.manager)
         self.can_listener = mars_can.GuiReader(self.manager)
-        self.b = can.BufferedReader()
 
         self.canbus = can.Bus(interface='socketcan',
                           channel= 'can0',

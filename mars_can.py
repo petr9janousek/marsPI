@@ -9,11 +9,12 @@ class GuiReader(can.Listener):
 
     def __init__(self, manager):
         self.manager = manager
+        #super(GuiReader, self).__init__()
         #self.is_paused = False
 
-    def on_message_recieved(self, msg):
-        print("Ahoj")
-        self.mamager.dataque = msg
+    def on_message_received(self, msg):
+        #print(msg)
+        self.manager.data_que.put(msg)
         GLib.idle_add(self.manager.add_info)
 
     #def pause(self):
