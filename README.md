@@ -19,10 +19,11 @@ ToDo úlohy jsou označeny podle důležitosti "+num", vyšší číslo => vyš�
 
 "pacman -S mingw-w64-x86_64-python-matplotlib"
 "pacman -S mingw-w64-x86_64-python-pyserial"
-pacman -S mingw-w64-x86_64-python-pylint
+"pacman -S mingw-w64-x86_64-python-pylint"
+"pacman -S mingw-w64-x86_64-python-can"
 
 #### Tools
-C:\msys64\usr\bin\bash 	-lc
+C:\msys64\usr\bin\bash -lc
 sed -i "s/\r//" /home/pi/Code/marsPI/mars_main.py	//vymění line endings
 
 #### Setting bashrc

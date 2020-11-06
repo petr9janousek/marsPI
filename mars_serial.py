@@ -21,8 +21,8 @@ class UART:
         if self.serial.in_waiting > 0:
             self.read_queue(self.manager.data_que)
         if not self.manager.data_que.empty():
-            GLib.idle_add(self.manager.manage_info)
-    
+            GLib.idle_add(self.manager.add_info)
+
 
     def connect(self, port):
         self.serial.port = port

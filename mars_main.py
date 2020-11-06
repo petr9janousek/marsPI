@@ -3,13 +3,15 @@
 #import modules
 import os, sys, logging, serial, queue, time, configparser
 
+import can
+
 #setup logger
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(module)s:%(message)s")
 logger = logging.getLogger("log")
 logger.setLevel("DEBUG")
 
 #import my code
-import mars_serial, mars_plot
+import mars_serial, mars_plot, mars_can
 
 #import GTK
 from gi.repository import Gtk, Gdk
@@ -105,10 +107,11 @@ class Manager():
         self.call_action(data[1], data)
 
     #mel by primo pouzit vnitrni info k uprave panelu
-    def manage_info(self):
-        data = [1,2,3,4,5,6,7,8]  
-        self.data_que.get()
-        self.switch_action(0, "hello", " sir!", "?")
+    def add_info(self):
+        #data = [1,2,3,4,5,6,7,8]
+        print(self.data_que.get())
+        print("SCCS")
+        #self.switch_action(0, "hello", " sir!", "?")
         #self.internalize(data)
         #self.show()
         #text = self.builder.get_object("info_textbox_master").get_buffer()
@@ -456,6 +459,13 @@ class Application():
         self.settings = Settings(self.builder)
         self.manager = Manager(self.builder)
         self.serial = mars_serial.UART(self.manager)
+        self.can_listener = mars_can.GuiReader(self.manager)
+        self.b = can.BufferedReader()
+
+        self.canbus = can.Bus(interface='socketcan',
+                          channel= 'can0',
+                          bitrate= '250000')
+        self.notifier = can.Notifier(self.canbus, [self.can_listener])
 
         self.callbacks = Handlers(self.builder, self.settings, self.serial)
         self.builder.connect_signals(self.callbacks)
